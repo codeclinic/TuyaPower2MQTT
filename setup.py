@@ -11,9 +11,7 @@ setup(
   download_url = 'https://github.com/codeclinic/TuyaPower2MQTT/archive/0.2.2.tar.gz',    # I explain this later on
   keywords = ['TUYA', 'POWER', 'STATS', 'DATA', 'REPORTING', 'SWITCH', 'SOCKET', 'OUTLET', 'SMARTLIFE', 'JINVOO', 'WIFI', 'SMARTDEVICE', 'SMART', 'HOME','AUTOMATION'],   # Keywords that define your package best
   install_requires=[            # dependencies
-          #'pycrypto',
           'pycryptodome',
-          #'paes',
           'pytuya',
           'paho-mqtt',
           'datetime',
