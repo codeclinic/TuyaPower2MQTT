@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'tuyapower2mqtt',         # How you named your package folder (MyLib)
   packages = ['tuyapower2mqtt'],   # Chose the same as "name"
-  version = '0.1',      # Start with a small number and increase it with every change you make
+  version = '0.2',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'Reports all the power stats & on/off state from a Tuya / SmartLife / Jinvoo WiFI smart devices such as a socket or switch including newer v3.3 protocol devices',   # Give a short description about your library
   long_description_content_type='text/markdown' # Use readme.md instead of readme.rst
