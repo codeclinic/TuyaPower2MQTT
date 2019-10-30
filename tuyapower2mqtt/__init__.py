@@ -62,7 +62,7 @@ def deviceInfo( deviceid, ip, key, vers ):
                         V = (float(data['dps']['20'])/10.0)
                         ret = "{ \"datetime\": \"%s\", \"switch\": \"%s\", \"power\": \"%s\", \"current\": \"%s\", \"voltage\": \"%s\" }" % (iso_time, sw, w, mA, V)
 
-                        pub_mqtt( w, mA, V )
+                        #pub_mqtt( w, mA, V )
 
                         return(ret)
                     else:
@@ -75,7 +75,7 @@ def deviceInfo( deviceid, ip, key, vers ):
                         V = (float(data['dps']['6'])/10.0)
                         ret = "{ \"datetime\": \"%s\", \"switch\": \"%s\", \"power\": \"%s\", \"current\": \"%s\", \"voltage\": \"%s\" }" % (iso_time, sw, w, mA, V)
 
-                        pub_mqtt( w, mA, V )
+                        #pub_mqtt( w, mA, V )
 
                         return(ret)
                     else:
@@ -95,19 +95,20 @@ def deviceInfo( deviceid, ip, key, vers ):
             sleep(2)
 
 
-def pub_mqtt( w, mA, V ):
+def pub_mqtt( w, mA, V, sw ):
 # Publish to MQTT service
     mqttc = mqtt.Client(MQTTUSER)
     mqttc.username_pw_set(MQTTUSER, MQTTPASSWORD)
     mqttc.connect(MQTTSERVER, MQTTPORT)
-    mqttc.publish(MQTTTOPIC+"watt", w, retain=False)
-    mqttc.publish(MQTTTOPIC+"current", mA, retain=False)
-    mqttc.publish(MQTTTOPIC+"voltage", V, retain=False)
+    mqttc.publish(MQTTTOPIC+"/watt", w, retain=False)
+    mqttc.publish(MQTTTOPIC+"/current", mA, retain=False)
+    mqttc.publish(MQTTTOPIC+"/voltage", V, retain=False)
+    mqttc.publish(MQTTTOPIC+"/state", sw, retain=False)
     mqttc.loop(2)
 
 
 # Start the process
 #responsejson = deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
 
-if __name__ == "__main__":
-    deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
+#if __name__ == "__main__":
+#    deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
