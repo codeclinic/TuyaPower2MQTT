@@ -18,6 +18,7 @@ import os
 import sys
 from time import sleep
 
+
 DEVICEID=sys.argv[1] if len(sys.argv) >= 2 else '01234567891234567890'
 DEVICEIP=sys.argv[2] if len(sys.argv) >= 3 else '012.345.678.910'
 DEVICEKEY=sys.argv[3] if len(sys.argv) >= 4 else '0123456789abcdef'
@@ -36,7 +37,7 @@ RETRY=5
 MQTTSERVER="127.0.0.1"
 MQTTUSER="homeassistant"
 MQTTPASSWORD="homeassistant"
-MQTTTOPIC="sensor/tuya/DEVICEID/" #trailing slash is receommended
+MQTTTOPIC="sensor/tuya/" + DEVICEID + "/" #trailing slash is receommended
 MQTTPORT="1883"
 # STOP EDITING
 
@@ -106,4 +107,7 @@ def pub_mqtt( w, mA, V ):
 
 
 # Start the process
-responsejson = deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
+#responsejson = deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
+
+if __name__ == "__main__":
+    deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
