@@ -7,7 +7,7 @@
 name = "tuyapower2mqtt"
 
 #import pycrypto
-import pycryptodome
+import crypto
 #import paes
 import pytuya
 import paho.mqtt.client as mqtt
