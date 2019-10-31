@@ -5,22 +5,22 @@
 # Author: Phill Healey
 
 #import pycrypto
-import Crypto
+#import Crypto
 #import paes
-import pytuya
-import paho.mqtt.client as mqtt
+#import pytuya
+#import paho.mqtt.client as mqtt
 
-import datetime
-import time
+#import datetime
+#import time
 import os
 import sys
-from time import sleep
+#from time import sleep
 
 import tuyapower2mqtt
 
-DEVICEID=sys.argv[1] if len(sys.argv) >= 2 else '01234567891234567890'
-DEVICEIP=sys.argv[2] if len(sys.argv) >= 3 else '012.345.678.910'
-DEVICEKEY=sys.argv[3] if len(sys.argv) >= 4 else '0123456789abcdef'
+DEVICEID=sys.argv[1] if len(sys.argv) >= 2 else '-99'
+DEVICEIP=sys.argv[2] if len(sys.argv) >= 3 else '-99'
+DEVICEKEY=sys.argv[3] if len(sys.argv) >= 4 else '-99'
 DEVICEVERS=sys.argv[4] if len(sys.argv) >= 5 else '3.1'
 
 # Check for environmental variables and always use those if available (required for Docker)
@@ -31,6 +31,7 @@ PLUGVERS=os.getenv('PLUGVERS', DEVICEVERS)
 # how my times to try to probe plug before giving up
 RETRY=5
 
-responsejson = tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
+tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
 
-print("STATS: " + responsejson)
+#responsejson = tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
+#print(responsejson)

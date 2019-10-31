@@ -2,3 +2,4 @@
 setup.cfg
 setup.py
 tuyapower2mqtt\__init__.py
+tuyapower2mqtt\getstats.py

@@ -6,11 +6,6 @@
 
 name = "tuyapower2mqtt"
 
-#import pycrypto
-import Crypto
-#import paes
-import pytuya
-import paho.mqtt.client as mqtt
 
 import datetime
 import time
@@ -18,27 +13,34 @@ import os
 import sys
 from time import sleep
 
+#import pycrypto
+#import Crypto
+#import paes
+import pytuya
+import paho.mqtt.client as mqtt
 
-DEVICEID=sys.argv[1] if len(sys.argv) >= 2 else '01234567891234567890'
-DEVICEIP=sys.argv[2] if len(sys.argv) >= 3 else '012.345.678.910'
-DEVICEKEY=sys.argv[3] if len(sys.argv) >= 4 else '0123456789abcdef'
-DEVICEVERS=sys.argv[4] if len(sys.argv) >= 5 else '3.1'
+
+
+#DEVICEID=sys.argv[1] if len(sys.argv) >= 2 else '01234567891234567890'
+#DEVICEIP=sys.argv[2] if len(sys.argv) >= 3 else '012.345.678.910'
+#DEVICEKEY=sys.argv[3] if len(sys.argv) >= 4 else '0123456789abcdef'
+#DEVICEVERS=sys.argv[4] if len(sys.argv) >= 5 else '3.1'
 
 # Check for environmental variables and always use those if available (required for Docker)
-PLUGID=os.getenv('PLUGID', DEVICEID)
-PLUGIP=os.getenv('PLUGIP', DEVICEIP)
-PLUGKEY=os.getenv('PLUGKEY', DEVICEKEY)
-PLUGVERS=os.getenv('PLUGVERS', DEVICEVERS)
+#PLUGID=os.getenv('PLUGID', DEVICEID)
+#PLUGIP=os.getenv('PLUGIP', DEVICEIP)
+#PLUGKEY=os.getenv('PLUGKEY', DEVICEKEY)
+#PLUGVERS=os.getenv('PLUGVERS', DEVICEVERS)
 # how my times to try to probe plug before giving up
-RETRY=5
+#RETRY=5
 
 # Setup MQTT server with your credentials
 # EDIT THIS
 MQTTSERVER="127.0.0.1"
 MQTTUSER="homeassistant"
 MQTTPASSWORD="homeassistant"
-MQTTTOPIC="sensor/tuya/" + DEVICEID + "/" #trailing slash is receommended
-MQTTPORT="1883"
+MQTTTOPIC="devices/tuya/plug/"
+MQTTPORT=1883
 # STOP EDITING
 
 def deviceInfo( deviceid, ip, key, vers ):
@@ -60,10 +62,9 @@ def deviceInfo( deviceid, ip, key, vers ):
                         w = (float(data['dps']['19'])/10.0)
                         mA = float(data['dps']['18'])
                         V = (float(data['dps']['20'])/10.0)
-                        ret = "{ \"datetime\": \"%s\", \"switch\": \"%s\", \"power\": \"%s\", \"current\": \"%s\", \"voltage\": \"%s\" }" % (iso_time, sw, w, mA, V)
+                        ret = "{ \"deviceid\": \"%s\", \"datetime\": \"%s\", \"switch\": \"%s\", \"power\": \"%s\", \"current\": \"%s\", \"voltage\": \"%s\" }" % (deviceid, iso_time, sw, w, mA, V)
 
-                        #pub_mqtt( w, mA, V )
-
+                        pub_mqtt(deviceid, ret)
                         return(ret)
                     else:
                         ret = "{ \"switch\": \"%s\" }" % sw
@@ -73,10 +74,9 @@ def deviceInfo( deviceid, ip, key, vers ):
                         w = (float(data['dps']['5'])/10.0)
                         mA = float(data['dps']['4'])
                         V = (float(data['dps']['6'])/10.0)
-                        ret = "{ \"datetime\": \"%s\", \"switch\": \"%s\", \"power\": \"%s\", \"current\": \"%s\", \"voltage\": \"%s\" }" % (iso_time, sw, w, mA, V)
+                        ret = "{ \"deviceid\": \"%s\", \"datetime\": \"%s\", \"switch\": \"%s\", \"power\": \"%s\", \"current\": \"%s\", \"voltage\": \"%s\" }" % (deviceid, iso_time, sw, w, mA, V)
 
-                        #pub_mqtt( w, mA, V )
-
+                        pub_mqtt(deviceid, ret)
                         return(ret)
                     else:
                         ret = "{ \"switch\": \"%s\" }" % sw
@@ -95,15 +95,17 @@ def deviceInfo( deviceid, ip, key, vers ):
             sleep(2)
 
 
-def pub_mqtt( w, mA, V, sw ):
+#def pub_mqtt( w, mA, V, sw ):
+def pub_mqtt(deviceid, ret):
 # Publish to MQTT service
     mqttc = mqtt.Client(MQTTUSER)
     mqttc.username_pw_set(MQTTUSER, MQTTPASSWORD)
     mqttc.connect(MQTTSERVER, MQTTPORT)
-    mqttc.publish(MQTTTOPIC+"/watt", w, retain=False)
-    mqttc.publish(MQTTTOPIC+"/current", mA, retain=False)
-    mqttc.publish(MQTTTOPIC+"/voltage", V, retain=False)
-    mqttc.publish(MQTTTOPIC+"/state", sw, retain=False)
+#    mqttc.publish(MQTTTOPIC+"/watt", w, retain=False)
+#    mqttc.publish(MQTTTOPIC+"/current", mA, retain=False)
+#    mqttc.publish(MQTTTOPIC+"/voltage", V, retain=False)
+#    mqttc.publish(MQTTTOPIC+"/state", sw, retain=False)
+    mqttc.publish(MQTTTOPIC+deviceid, ret, retain=False)
     mqttc.loop(2)
 
 
