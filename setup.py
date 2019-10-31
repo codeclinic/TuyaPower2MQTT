@@ -1,7 +1,8 @@
-from distutils.core import setup
-with open("tuyapower2mqtt/README.md", "r") as fh:
+#from distutils.core import setup
+import setuptools
+with open("README.md", "r") as fh:
     long_description = fh.read()
-setup(
+setuptools.setup(
   name = 'tuyapower2mqtt',         # How you named your package folder (MyLib)
   packages = ['tuyapower2mqtt'],   # Chose the same as "name"
   version = '0.3.8',      # Start with a small number and increase it with every change you make
