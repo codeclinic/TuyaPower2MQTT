@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
 Name: tuyapower2mqtt
-Version: 0.5.2
+Version: 0.5.4
 Summary: Reports all the power stats & on/off state from a Tuya / SmartLife / Jinvoo WiFI smart devices such as a socket or switch including newer v3.3 protocol devices, then sends them as JSON via MQTT
 Home-page: https://github.com/codeclinic/TuyaPower2MQTT
 Author: Phill Healey
 Author-email: phill@codeclinic.de
 License: MIT
-Download-URL: https://github.com/codeclinic/TuyaPower2MQTT/archive/0.5.2.tar.gz
+Download-URL: https://github.com/codeclinic/TuyaPower2MQTT/archive/0.5.4.tar.gz
 Description: # TuyaPower2MQTT - PyPi Module
         Author: Phill Healey
         https://github.com/codeclinic/TuyaPower2MQTT

@@ -116,13 +116,15 @@ def pub_mqtt(deviceid, ret):
     mqttc.publish(MQTTTOPIC+deviceid, ret, retain=False)
     mqttc.on_message=on_message        #attach function to callback
     mqttc.loop(2)
+    time.sleep(4) # wait
+    mqttc.loop_stop() #stop the loop
 
 def on_message(client, userdata, message):
     #logging.info('MESSAGE CALLBACK')
-    logging.info("message received " ,str(message.payload.decode("utf-8")))
-    logging.info("message topic=",message.topic)
-    logging.info("message qos=",message.qos)
-    logging.info("message retain flag=",message.retain)
+    print("message received " ,str(message.payload.decode("utf-8")))
+    print("message topic=",message.topic)
+    print("message qos=",message.qos)
+    print("message retain flag=",message.retain)
 
 
 # Start the process
