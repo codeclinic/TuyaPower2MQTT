@@ -7,7 +7,7 @@
 name = "tuyapower2mqtt"
 
 import logging
-logging.basicConfig(filename='/srv/homeassistant/lib/python3.7/site-packages/tuyapower2mqtt/tuyapower2mqtt.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='tuyapower2mqtt.log', filemode='w', level=logging.DEBUG)
 
 import datetime
 import time

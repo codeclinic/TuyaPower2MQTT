@@ -11,7 +11,7 @@
 #import paho.mqtt.client as mqtt
 
 import logging
-logging.basicConfig(filename='/srv/homeassistant/lib/python3.7/site-packages/tuyapower2mqtt/tuyapower2mqtt.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='tuyapower2mqtt.log', filemode='w', level=logging.DEBUG)
 
 #import datetime
 #import time
