@@ -6,6 +6,8 @@
 
 name = "tuyapower2mqtt"
 
+import logging
+logging.basicConfig(filename='/srv/homeassistant/lib/python3.7/site-packages/tuyapower2mqtt/tuyapower2mqtt.log', filemode='w', level=logging.DEBUG)
 
 import datetime
 import time
@@ -44,6 +46,7 @@ MQTTPORT=1883
 # STOP EDITING
 
 def deviceInfo( deviceid, ip, key, vers ):
+    logging.info('Inputs: ' + deviceid + ' / ' + ip + ' / ' + key + ' / ' + vers)
     watchdog = 0
     now = datetime.datetime.utcnow()
     iso_time = now.strftime("%Y-%m-%dT%H:%M:%SZ") 
@@ -58,6 +61,7 @@ def deviceInfo( deviceid, ip, key, vers ):
                 sw =data['dps']['1']
 
                 if vers == '3.3':
+                    logging.info('Version 3.3')
                     if '19' in data['dps'].keys():
                         w = (float(data['dps']['19'])/10.0)
                         mA = float(data['dps']['18'])
@@ -70,6 +74,7 @@ def deviceInfo( deviceid, ip, key, vers ):
                         ret = "{ \"switch\": \"%s\" }" % sw
                         return(ret)
                 else:
+                    logging.info('Version 3.1')
                     if '5' in data['dps'].keys():
                         w = (float(data['dps']['5'])/10.0)
                         mA = float(data['dps']['4'])
@@ -82,6 +87,7 @@ def deviceInfo( deviceid, ip, key, vers ):
                         ret = "{ \"switch\": \"%s\" }" % sw
                         return(ret)
             else:
+                logging.warning('Incomplete response from plug')
                 ret = "{\"result\": \"Incomplete response from plug %s [%s].\"}" % (deviceid,ip)
                 return(ret)
             break
@@ -90,6 +96,7 @@ def deviceInfo( deviceid, ip, key, vers ):
         except:
             watchdog+=1
             if(watchdog>RETRY):
+                logging.warning('ERROR: No response from plug')
                 ret = "{\"result\": \"ERROR: No response from plug %s [%s].\"}" % (deviceid,ip)
                 return(ret)
             sleep(2)
@@ -97,6 +104,7 @@ def deviceInfo( deviceid, ip, key, vers ):
 
 #def pub_mqtt( w, mA, V, sw ):
 def pub_mqtt(deviceid, ret):
+    logging.info('Attempting MQTT')
 # Publish to MQTT service
     mqttc = mqtt.Client(MQTTUSER)
     mqttc.username_pw_set(MQTTUSER, MQTTPASSWORD)
@@ -106,7 +114,15 @@ def pub_mqtt(deviceid, ret):
 #    mqttc.publish(MQTTTOPIC+"/voltage", V, retain=False)
 #    mqttc.publish(MQTTTOPIC+"/state", sw, retain=False)
     mqttc.publish(MQTTTOPIC+deviceid, ret, retain=False)
+    mqttc.on_message=on_message        #attach function to callback
     mqttc.loop(2)
+
+def on_message(client, userdata, message):
+    #logging.info('MESSAGE CALLBACK')
+    logging.info("message received " ,str(message.payload.decode("utf-8")))
+    logging.info("message topic=",message.topic)
+    logging.info("message qos=",message.qos)
+    logging.info("message retain flag=",message.retain)
 
 
 # Start the process

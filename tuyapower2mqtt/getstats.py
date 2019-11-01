@@ -10,6 +10,9 @@
 #import pytuya
 #import paho.mqtt.client as mqtt
 
+import logging
+logging.basicConfig(filename='/srv/homeassistant/lib/python3.7/site-packages/tuyapower2mqtt/tuyapower2mqtt.log', filemode='w', level=logging.DEBUG)
+
 #import datetime
 #import time
 import os
@@ -31,6 +34,7 @@ PLUGVERS=os.getenv('PLUGVERS', DEVICEVERS)
 # how my times to try to probe plug before giving up
 RETRY=5
 
+logging.info('GoingIn')
 tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
 
 #responsejson = tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)

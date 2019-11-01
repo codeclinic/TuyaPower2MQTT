@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
 Name: tuyapower2mqtt
-Version: 0.4.1
+Version: 0.5.2
 Summary: Reports all the power stats & on/off state from a Tuya / SmartLife / Jinvoo WiFI smart devices such as a socket or switch including newer v3.3 protocol devices, then sends them as JSON via MQTT
 Home-page: https://github.com/codeclinic/TuyaPower2MQTT
 Author: Phill Healey
 Author-email: phill@codeclinic.de
 License: MIT
-Download-URL: https://github.com/codeclinic/TuyaPower2MQTT/archive/0.4.1.tar.gz
+Download-URL: https://github.com/codeclinic/TuyaPower2MQTT/archive/0.5.2.tar.gz
 Description: # TuyaPower2MQTT - PyPi Module
         Author: Phill Healey
         https://github.com/codeclinic/TuyaPower2MQTT
@@ -23,13 +23,13 @@ Description: # TuyaPower2MQTT - PyPi Module
          sudo apt-get install python-crypto python-pip		
         ```
         
-        You'll need a Mosquitto (MQTT) server to publish the data to. If you don't already have on running, I recommend following this simple tutorial: [Installing an MQTT server on Debian](https://medium.com/@rossdanderson/installing-mosquitto-broker-on-debian-2a341fe88981). Note, you can try installing MQTT without adding the repo suggested in the first step.
+        You'll need a Mosquitto (MQTT) server to publish the data to. If you don't already have one running, I recommend following this simple tutorial: [Installing an MQTT server on Debian](https://medium.com/@rossdanderson/installing-mosquitto-broker-on-debian-2a341fe88981). Note, you can try installing MQTT without adding the repo suggested in the first step.
         
         # Functions
         * deviceInfo - Poll device and return on, w, mA, V and err data.
-            ```python
-           	tuyapower.deviceInfo(PLUGID, PLUGIP, PLUGKEY, PLUGVERS)
-            ```
+        ```python
+        tuyapower.deviceInfo(PLUGID, PLUGIP, PLUGKEY, PLUGVERS)
+        ```
         
         # Usage
         Gathers full power stats / data from Tuya sockets &amp; switches and reports results as JSON via MQTT
