@@ -32,7 +32,7 @@ import paho.mqtt.client as mqtt
 #PLUGKEY=os.getenv('PLUGKEY', DEVICEKEY)
 #PLUGVERS=os.getenv('PLUGVERS', DEVICEVERS)
 # how my times to try to probe plug before giving up
-#RETRY=5
+RETRY=5
 
 # Setup MQTT server with your credentials
 # EDIT THIS

@@ -18,9 +18,9 @@ You'll need a Mosquitto (MQTT) server to publish the data to. If you don't alrea
 
 # Functions
 * deviceInfo - Poll device and return on, w, mA, V and err data.
-    ```python
-   	tuyapower.deviceInfo(PLUGID, PLUGIP, PLUGKEY, PLUGVERS)
-    ```
+```python
+tuyapower.deviceInfo(PLUGID, PLUGIP, PLUGKEY, PLUGVERS)
+```
 
 # Usage
 Gathers full power stats / data from Tuya sockets &amp; switches and reports results as JSON via MQTT
