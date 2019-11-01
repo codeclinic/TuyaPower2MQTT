@@ -35,7 +35,7 @@ PLUGVERS=os.getenv('PLUGVERS', DEVICEVERS)
 RETRY=5
 
 logging.info('GoingIn')
-tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
+#tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
 
-#responsejson = tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
-#print(responsejson)
+responsejson = tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
+tuyapower2mqtt.pub_mqtt(PLUGID, responsejson)

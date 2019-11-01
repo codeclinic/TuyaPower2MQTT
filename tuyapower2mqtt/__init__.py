@@ -68,7 +68,7 @@ def deviceInfo( deviceid, ip, key, vers ):
                         V = (float(data['dps']['20'])/10.0)
                         ret = "{ \"deviceid\": \"%s\", \"datetime\": \"%s\", \"switch\": \"%s\", \"power\": \"%s\", \"current\": \"%s\", \"voltage\": \"%s\" }" % (deviceid, iso_time, sw, w, mA, V)
 
-                        pub_mqtt(deviceid, ret)
+                        #pub_mqtt(deviceid, ret)
                         return(ret)
                     else:
                         ret = "{ \"switch\": \"%s\" }" % sw
@@ -81,7 +81,7 @@ def deviceInfo( deviceid, ip, key, vers ):
                         V = (float(data['dps']['6'])/10.0)
                         ret = "{ \"deviceid\": \"%s\", \"datetime\": \"%s\", \"switch\": \"%s\", \"power\": \"%s\", \"current\": \"%s\", \"voltage\": \"%s\" }" % (deviceid, iso_time, sw, w, mA, V)
 
-                        pub_mqtt(deviceid, ret)
+                        #pub_mqtt(deviceid, ret)
                         return(ret)
                     else:
                         ret = "{ \"switch\": \"%s\" }" % sw
