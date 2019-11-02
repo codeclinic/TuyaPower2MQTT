@@ -4,20 +4,11 @@
 #
 # Author: Phill Healey
 
-#import pycrypto
-#import Crypto
-#import paes
-#import pytuya
-#import paho.mqtt.client as mqtt
+#import logging
+#logging.basicConfig(filename='tuyapower2mqtt.log', filemode='w', level=logging.DEBUG)
 
-import logging
-logging.basicConfig(filename='tuyapower2mqtt.log', filemode='w', level=logging.DEBUG)
-
-#import datetime
-#import time
 import os
 import sys
-#from time import sleep
 
 import tuyapower2mqtt
 
@@ -34,7 +25,15 @@ PLUGVERS=os.getenv('PLUGVERS', DEVICEVERS)
 # how my times to try to probe plug before giving up
 RETRY=5
 
-logging.info('GoingIn')
+# Setup MQTT server with your credentials
+# EDIT THIS
+MQTTSERVER="127.0.0.1"
+MQTTUSER="homeassistant"
+MQTTPASSWORD="homeassistant"
+MQTTTOPIC="devices/tuya/plug/"
+MQTTPORT=1883
+# STOP EDITING
+
 #tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
 
 responsejson = tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
