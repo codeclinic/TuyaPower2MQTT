@@ -95,13 +95,10 @@ def deviceInfo( deviceid, ip, key, vers ):
 #def pub_mqtt( w, mA, V, sw ):
 def pub_mqtt(mqttcreds, deviceid, ret):
 # Publish to MQTT service
-    for x in mqttcreds:
-        print(x) 
-
     mqttc = mqtt.Client(mqttcreds[2])
     mqttc.username_pw_set(mqttcreds[2], mqttcreds[3])
     mqttc.connect(mqttcreds[0], mqttcreds[1])
-    mqttc.publish(mqttcreds[4]+deviceid, ret, retain=mqttcreds[4])
+    mqttc.publish(mqttcreds[4]+deviceid, ret, retain=mqttcreds[5])
     mqttc.loop(2)
     mqttc.loop_stop() #stop the loop
 
