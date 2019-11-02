@@ -30,11 +30,14 @@ RETRY=5
 MQTTSERVER="127.0.0.1"
 MQTTUSER="homeassistant"
 MQTTPASSWORD="homeassistant"
-MQTTTOPIC="devices/tuya/plug/"
+MQTTTOPIC="devices/tuya/plug/" # Keep trailing slash
 MQTTPORT=1883
+MQTTRETAIN=False #True / False
 # STOP EDITING
+
+mqttcreds = (MQTTSERVER, MQTTPORT, MQTTUSER, MQTTPASSWORD, MQTTTOPIC, MQTTRETAIN)
 
 #tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
 
 responsejson = tuyapower2mqtt.deviceInfo(PLUGID,PLUGIP,PLUGKEY,PLUGVERS)
-tuyapower2mqtt.pub_mqtt(PLUGID, responsejson)
+tuyapower2mqtt.pub_mqtt(mqttcreds, PLUGID, responsejson)
