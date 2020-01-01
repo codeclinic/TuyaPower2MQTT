@@ -17,6 +17,7 @@ from time import sleep
 #import paes
 import pytuya
 import paho.mqtt.client as mqtt
+import json
 
 
 
@@ -42,10 +43,26 @@ RETRY=5
 #MQTTPORT=1883
 # STOP EDITING
 
+def getValuesFromDataPack(data, wi, ai, vi, swi=1):
+    returnedInfo = {}
+    returnedInfo["switch"] = data['dps'][str(swi)] # Switch State - True = On
+    try:
+        returnedInfo["power"] = (float(data['dps'][str(wi)])/10.0) # Power - W
+        returnedInfo["current"] = float(data['dps'][str(ai)]) # Current - mA
+        returnedInfo["voltage"] = (float(data['dps'][str(vi)])/10.0) # Voltage - V
+    except IndexError:
+        returnedInfo["result"] = "Only switch information was able to be parsed from the plug"
+
+    return returnedInfo
+
 def deviceInfo( deviceid, ip, key, vers ):
+    returnedInfo = {}
     watchdog = 0
     now = datetime.datetime.utcnow()
     iso_time = now.strftime("%Y-%m-%dT%H:%M:%SZ") 
+    returnedInfo["datetime"] = iso_time
+    returnedInfo["deviceid"] = deviceid
+
     while True:
         try:
             d = pytuya.OutletDevice(deviceid, ip, key)
@@ -54,42 +71,25 @@ def deviceInfo( deviceid, ip, key, vers ):
 
             data = d.status()
             if(d):
-                sw =data['dps']['1']
-
-                if vers == '3.3':
-                    if '19' in data['dps'].keys():
-                        w = (float(data['dps']['19'])/10.0)
-                        mA = float(data['dps']['18'])
-                        V = (float(data['dps']['20'])/10.0)
-                        ret = "{ \"deviceid\": \"%s\", \"datetime\": \"%s\", \"switch\": \"%s\", \"power\": \"%s\", \"current\": \"%s\", \"voltage\": \"%s\" }" % (deviceid, iso_time, sw, w, mA, V)
-
-                        return(ret)
-                    else:
-                        ret = "{ \"switch\": \"%s\" }" % sw
-                        return(ret)
+                dpsKeys = data['dps'].keys()
+                if vers == '3.3' and ('19' in dpsKeys):
+                    returnedInfo.update(getValuesFromDataPack(data, 19, 18, 20))
                 else:
-                    if '5' in data['dps'].keys():
-                        w = (float(data['dps']['5'])/10.0)
-                        mA = float(data['dps']['4'])
-                        V = (float(data['dps']['6'])/10.0)
-                        ret = "{ \"deviceid\": \"%s\", \"datetime\": \"%s\", \"switch\": \"%s\", \"power\": \"%s\", \"current\": \"%s\", \"voltage\": \"%s\" }" % (deviceid, iso_time, sw, w, mA, V)
-
-                        return(ret)
-                    else:
-                        ret = "{ \"switch\": \"%s\" }" % sw
-                        return(ret)
+                    if '5' in dpsKeys:
+                        returnedInfo.update(getValuesFromDataPack(data, 5, 4, 6))
             else:
-                ret = "{\"result\": \"Incomplete response from plug %s [%s].\"}" % (deviceid,ip)
-                return(ret)
+                returnedInfo["result"] = "Incomplete response from plug%s [%s]." % (deviceid, ip)
             break
         except KeyboardInterrupt:
             pass
         except:
             watchdog+=1
             if(watchdog>RETRY):
-                ret = "{\"result\": \"ERROR: No response from plug %s [%s].\"}" % (deviceid,ip)
-                return(ret)
+                returnedInfo["result"] = "Incomplete response from plug%s [%s]." % (deviceid, ip)
+                break
             sleep(2)
+
+    return json.dumps(returnedInfo)
 
 
 #def pub_mqtt( w, mA, V, sw ):
