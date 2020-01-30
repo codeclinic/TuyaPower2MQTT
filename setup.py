@@ -7,13 +7,13 @@ with open("README.md", "r") as fh:
 setuptools.setup(
   name = 'tuyapower2mqtt',         # How you named your package folder (MyLib)
   packages = ['tuyapower2mqtt'],   # Chose the same as "name"
-  version = '1.1.1',      # Start with a small number and increase it with every change you make
+  version = '1.1.2',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'Reports all the power stats & on/off state from a Tuya / SmartLife / Jinvoo WiFI smart devices such as a socket or switch including newer v3.3 protocol devices, then sends them as JSON via MQTT',   # Give a short description about your library
   author = 'Phill Healey',                   # Type in your name
   author_email = 'phill@codeclinic.de',      # Type in your E-Mail
   url = 'https://github.com/codeclinic/TuyaPower2MQTT',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/codeclinic/TuyaPower2MQTT/archive/1.0.0.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/codeclinic/TuyaPower2MQTT/archive/1.1.2.tar.gz',    # I explain this later on
   long_description=long_description,
   long_description_content_type='text/markdown',
   keywords = ['TUYA', 'POWER', 'STATS', 'DATA', 'REPORTING', 'SWITCH', 'SOCKET', 'OUTLET', 'SMARTLIFE', 'JINVOO', 'WIFI', 'SMARTDEVICE', 'SMART', 'HOME','AUTOMATION'],   # Keywords that define your package best
