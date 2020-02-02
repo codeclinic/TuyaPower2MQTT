@@ -78,7 +78,7 @@ def deviceInfo( deviceid, ip, key, vers ):
                     if '5' in dpsKeys:
                         returnedInfo.update(getValuesFromDataPack(data, 5, 4, 6))
             else:
-                returnedInfo["result"] = "Incomplete response from plug%s [%s]." % (deviceid, ip)
+                returnedInfo["result"] = "Incomplete response from plug: %s [%s]." % (deviceid, ip)
             break
         except KeyboardInterrupt:
             pass

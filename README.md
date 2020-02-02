@@ -26,3 +26,6 @@ tuyapower.deviceInfo(PLUGID, PLUGIP, PLUGKEY, PLUGVERS)
 Gathers full power stats / data from Tuya sockets &amp; switches and reports results as JSON via MQTT
 
 Full details coming soon.
+
+# Home Assistant Integration
+I wrote an in-depth guide on how to use this package and how to extend it to [Home Assistant integration](https://community.home-assistant.io/t/tuya-switches-w-power-usage-data-no-tuyaconvert-needed/145555)
